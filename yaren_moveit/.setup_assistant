@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: yaren_description
+    relative_path: urdf/yaren_description.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/yaren_description.srdf
+  CONFIG:
+    author_name: yaren
+    author_email: yaren@espol.edu.ec
+    generated_timestamp: 1671763906

@@ -1,0 +1,51 @@
+controller_list:
+  - name: fake_ArmRight_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - Joint_5
+      - Joint_6
+      - Joint_7
+      - Joint_8
+  - name: fake_ArmLeft_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - Joint_9
+      - Joint_10
+      - Joint_11
+      - Joint_12
+  - name: fake_Head_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - Joint_3
+      - Joint_4
+  - name: fake_Hip_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - Joint_1
+      - Joint_2
+  - name: fake_yaren_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - Joint_1
+      - Joint_2
+      - Joint_3
+      - Joint_4
+      - Joint_5
+      - Joint_6
+      - Joint_7
+      - Joint_8
+      - Joint_9
+      - Joint_10
+      - Joint_11
+      - Joint_12
+initial:  # Define initial robot poses per group
+  - group: ArmRight
+    pose: arm_right
+  - group: ArmLeft
+    pose: arm_left
+  - group: Head
+    pose: head
+  - group: Hip
+    pose: hip
+  - group: yaren
+    pose: yaren_motion

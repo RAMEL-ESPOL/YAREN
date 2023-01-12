@@ -1,0 +1,76 @@
+yaren_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - Joint_1
+    - Joint_2
+    - Joint_3
+    - Joint_4
+    - Joint_5
+    - Joint_6
+    - Joint_7
+    - Joint_8
+    - Joint_9
+    - Joint_10
+    - Joint_11
+    - Joint_12
+  gains:
+    Joint_1:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_2:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_3:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_4:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_5:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_6:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_7:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_8:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_9:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_10:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_11:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    Joint_12:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1

@@ -1,0 +1,11 @@
+<launch>
+
+    <include file="$(find yaren_description)/launch/display1.launch"/>
+ 
+    <node name="gazebo_communication" pkg="yaren_master" type="yaren_communitation.py" output="screen"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find yaren_description)/config/configuration.rviz" required="true" />
+
+    <node name="motion_goal" pkg="yaren_master" type="movement.py" output="screen"/>
+
+</launch>
