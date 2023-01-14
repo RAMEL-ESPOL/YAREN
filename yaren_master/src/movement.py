@@ -77,13 +77,13 @@ class movement:
                 self.pub.publish(self.joints_states)
                 rospy.sleep(time)
 
-                self.joint_position_state=[0.28,0.0,0.0,0.0,0.78,0.0,0.0,0.52,0.0,0.52,0.52,0.0]
+                self.joint_position_state=[0.4,0.0,0.0,0.0,0.78,0.0,0.0,0.52,0.0,0.52,0.52,0.0]
                 self.joints_states.position = self.joint_position_state
                 #self.pub.publish(self.joints_states)
                 self.pub.publish(self.joints_states)
                 rospy.sleep(time)
 
-                self.joint_position_state=[0.28,0.0,0.0,0.0,0.78,0.52,0.52,0.52,-0.78,0.52,-0.52,0.52]
+                self.joint_position_state=[0.4,0.0,0.0,0.0,0.78,0.52,0.52,0.52,-0.78,0.52,-0.52,0.52]
                 self.joints_states.position = self.joint_position_state
                 #self.pub.publish(self.joints_states)
                 self.pub.publish(self.joints_states)

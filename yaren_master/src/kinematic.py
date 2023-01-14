@@ -53,14 +53,14 @@ class kinematic:
 
         while not rospy.is_shutdown():
             
-            cap = cv2.VideoCapture(0)
+            cap = cv2.VideoCapture(-1)
             ## Setup mediapipe instance
             with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
                 while cap.isOpened():
                     ret, frame = cap.read()
                     
                     # Recolor image to RGB
-                    image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGRAY)
+                    image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGR)
                     image.flags.writeable = False
                 
                     # Make detection
@@ -68,7 +68,7 @@ class kinematic:
                 
                     # Recolor back to BGR
                     image.flags.writeable = True
-                    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGRAY)
+                    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
                     
                     # Extract landmarks
                     try:
