@@ -1,9 +1,9 @@
 import pygame
 from itertools import cycle
 
-TILE_SIZE = 32
-SCREEN_SIZE = pygame.Rect((0, 0, 21*TILE_SIZE, 8*TILE_SIZE))
-
+TILE_SIZE = 39
+#SCREEN_SIZE = pygame.Rect((0, 0, 21*TILE_SIZE, 8*TILE_SIZE))
+SCREEN_SIZE = pygame.Rect((0, 0, 800, 480))
 
 class Expression(pygame.sprite.Sprite):
     def __init__(self, data):
@@ -17,7 +17,8 @@ class Expression(pygame.sprite.Sprite):
                 x += 1
             y += 1
             x = 0
-        self.image = pygame.transform.scale(self.image, (TILE_SIZE*len(data[0]), TILE_SIZE*len(data)))
+        #self.image = pygame.transform.scale(self.image, (TILE_SIZE*len(data[0]), TILE_SIZE*len(data)))
+        self.image = pygame.transform.scale(self.image, (800, 480))
         self.rect = self.image.get_rect()
 
 REGULAR = Expression([
@@ -73,7 +74,7 @@ def main():
 
         screen.fill((30, 30, 30))
         screen.blit(current.image, current.rect)
-        timer.tick(60)
+        timer.tick(1)
         pygame.display.update()
 
 if __name__ == "__main__":
