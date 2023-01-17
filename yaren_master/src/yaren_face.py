@@ -13,7 +13,7 @@ class Expression(pygame.sprite.Sprite):
         for row in data:
             for col in row:
                 if col == "O":
-                    self.image.set_at((x, y), pygame.Color('dodgerblue'))
+                    self.image.set_at((x, y), pygame.Color('firebrick3')) #firebrick2 #'dodgerblue'
                 x += 1
             y += 1
             x = 0
