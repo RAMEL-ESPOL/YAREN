@@ -41,7 +41,7 @@ if __name__ == '__main__':
   
   actual_id = 100
   while actual_id != 0:
-    actual_id = int(input("Indicate the motor´s id which activated torque is required:"))
+    actual_id = int(input("Indicate the motor´s id from which activated torque is required:"))
     if actual_id != 0:
       for motor in list_motors:
         if actual_id in motor.list_ids:
@@ -60,6 +60,7 @@ if __name__ == '__main__':
       new_value = motor.angleConversion(dxl_present_position,True,id)
       joint_values[id-1]
    print(joint_values) 
+   time.sleep(5)
       
   
   #Torque off, end of code
