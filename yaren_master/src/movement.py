@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 
@@ -71,59 +71,61 @@ class movement:
             
             if (number=='5'):
             
-                self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.0,0.0,0.52,0.0,0.52,0.52,0.0]
-                self.joints_states.position = self.joint_position_state
-                #self.pub.publish(self.joints_states)
-                self.pub.publish(self.joints_states)
-                rospy.sleep(time)
+                while not rospy.is_shutdown():
+                    self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.0,0.0,0.52,0.0,0.52,0.52,0.0]
+                    self.joints_states.position = self.joint_position_state
+                    #self.pub.publish(self.joints_states)
+                    self.pub.publish(self.joints_states)
+                    rospy.sleep(time)
 
-                self.joint_position_state=[0.4,0.0,0.0,0.0,0.78,0.0,0.0,0.52,0.0,0.52,0.52,0.0]
-                self.joints_states.position = self.joint_position_state
-                #self.pub.publish(self.joints_states)
-                self.pub.publish(self.joints_states)
-                rospy.sleep(time)
+                    self.joint_position_state=[0.4,0.0,0.0,0.0,0.78,0.0,0.0,0.52,0.0,0.52,0.52,0.0]
+                    self.joints_states.position = self.joint_position_state
+                    #self.pub.publish(self.joints_states)
+                    self.pub.publish(self.joints_states)
+                    rospy.sleep(time)
 
-                self.joint_position_state=[0.4,0.0,0.0,0.0,0.78,0.52,0.52,0.52,-0.78,0.52,-0.52,0.52]
-                self.joints_states.position = self.joint_position_state
-                #self.pub.publish(self.joints_states)
-                self.pub.publish(self.joints_states)
-                rospy.sleep(time)
+                    self.joint_position_state=[0.4,0.0,0.0,0.0,0.78,0.52,0.52,0.52,-0.78,0.52,-0.52,0.52]
+                    self.joints_states.position = self.joint_position_state
+                    #self.pub.publish(self.joints_states)
+                    self.pub.publish(self.joints_states)
+                    rospy.sleep(time)
 
-                self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,0.52,1.5,-0.78,0.52,-0.52,1.5]
-                self.joints_states.position = self.joint_position_state
-                #self.pub.publish(self.joints_states)
-                self.pub.publish(self.joints_states)
-                rospy.sleep(time)
+                    self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,0.52,1.5,-0.78,0.52,-0.52,1.5]
+                    self.joints_states.position = self.joint_position_state
+                    #self.pub.publish(self.joints_states)
+                    self.pub.publish(self.joints_states)
+                    rospy.sleep(time)
 
-                self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,0.52,0.52,-0.78,0.52,-0.52,0.52]
-                self.joints_states.position = self.joint_position_state
-                #self.pub.publish(self.joints_states)
-                self.pub.publish(self.joints_states)
-                rospy.sleep(time)
+                    self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,0.52,0.52,-0.78,0.52,-0.52,0.52]
+                    self.joints_states.position = self.joint_position_state
+                    #self.pub.publish(self.joints_states)
+                    self.pub.publish(self.joints_states)
+                    rospy.sleep(time)
 
-                self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,0.52,1.5,-0.78,0.52,-0.52,1.5]
-                self.joints_states.position = self.joint_position_state
-                #self.pub.publish(self.joints_states)
-                self.pub.publish(self.joints_states)
-                rospy.sleep(time)
+                    self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,0.52,1.5,-0.78,0.52,-0.52,1.5]
+                    self.joints_states.position = self.joint_position_state
+                    #self.pub.publish(self.joints_states)
+                    self.pub.publish(self.joints_states)
+                    rospy.sleep(time)
 
-                self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,-0.52,1.5,-0.78,0.52,0.52,1.5]
-                self.joints_states.position = self.joint_position_state
-                #self.pub.publish(self.joints_states)
-                self.pub.publish(self.joints_states)
-                rospy.sleep(time)
+                    self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,-0.52,1.5,-0.78,0.52,0.52,1.5]
+                    self.joints_states.position = self.joint_position_state
+                    #self.pub.publish(self.joints_states)
+                    self.pub.publish(self.joints_states)
+                    rospy.sleep(time)
 
-                self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,0.52,1.5,-0.78,0.52,-0.52,1.5]
-                self.joints_states.position = self.joint_position_state
-                #self.pub.publish(self.joints_states)
-                self.pub.publish(self.joints_states)
-                rospy.sleep(time)
+                    self.joint_position_state=[0.0,0.0,0.0,0.0,0.78,0.52,0.52,1.5,-0.78,0.52,-0.52,1.5]
+                    self.joints_states.position = self.joint_position_state
+                    #self.pub.publish(self.joints_states)
+                    self.pub.publish(self.joints_states)
+                    rospy.sleep(time)
 
-                self.joint_position_state=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.48,0.0,0.0,0.0,0.48]
-                self.joints_states.position = self.joint_position_state
-                #self.pub.publish(self.joints_states)
-                self.pub.publish(self.joints_states)
-                rospy.sleep(time)
+                    self.joint_position_state=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.48,0.0,0.0,0.0,0.48]
+                    self.joints_states.position = self.joint_position_state
+                    #self.pub.publish(self.joints_states)
+                    self.pub.publish(self.joints_states)
+                    rospy.sleep(time)
+
 
 
 
