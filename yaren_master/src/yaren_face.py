@@ -1,8 +1,9 @@
+#!/usr/bin/env python3
 import pygame
 from itertools import cycle
-import ctypes
+import subprocess
 
-carpetaImgs = "rostro/"
+carpetaImgs = "src/urdf_tutorial/rostro/" #/home/robots-irda/catkin_ws/src/urdf_tutorial/rostro/Initial.png
 IMAGEN_SIN_PALABRAS = carpetaImgs + "Initial.png"
 IMAGEN_FELIZ = carpetaImgs + "Rutina 2.png"
 IMAGEN_MUY_FELIZ =  carpetaImgs + "Rutina 3.png"
@@ -24,14 +25,17 @@ pasosVertical = 5
 def moverVentana():
     keys = pygame.key.get_pressed()
     
-    if keys[pygame.K_LEFT]:
+    # Cambiamos las teclas de flecha por WASD
+    if keys[pygame.K_a]:
         window_position[0] -= pasosHorizontal
-    if keys[pygame.K_RIGHT]:
+    if keys[pygame.K_d]:
         window_position[0] += pasosHorizontal
-    if keys[pygame.K_UP]:
+    if keys[pygame.K_w]:
         window_position[1] -= pasosVertical
-    if keys[pygame.K_DOWN]:
+    if keys[pygame.K_s]:
         window_position[1] += pasosVertical
+    
+    print(window_position)
 
 def main():
     # Inicializa Pygame
@@ -41,7 +45,8 @@ def main():
     window_width = 800
     window_height = 480
 
-    # Crea la ventana sin bordes
+    # Crea la ventana redimensionable
+    # No es necesario instalar nada adicional en Ubuntu
     window = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
 
     timer = pygame.time.Clock()
@@ -64,8 +69,7 @@ def main():
         # Mueve las ventanas por medio de teclas
         moverVentana()
 
-        # Mueve la ventana
-        ctypes.windll.user32.MoveWindow(pygame.display.get_wm_info()['window'], window_position[0], window_position[1], window_width, window_height, True)
+        subprocess.run(['wmctrl', '-r', ':ACTIVE:', '-e', f'0,{window_position[0]},{window_position[1]},-1,-1'])
 
         imagen = pygame.image.load(current)
         window.blit(imagen, (0, 0))
