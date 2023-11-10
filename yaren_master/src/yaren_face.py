@@ -1,82 +1,83 @@
-#!/usr/bin/env python3
 import pygame
 from itertools import cycle
+import ctypes
 
-TILE_SIZE = 39
-#SCREEN_SIZE = pygame.Rect((0, 0, 21*TILE_SIZE, 8*TILE_SIZE))
-SCREEN_SIZE = pygame.Rect((0, 0, 800, 480))
+carpetaImgs = "rostro/"
+IMAGEN_SIN_PALABRAS = carpetaImgs + "Initial.png"
+IMAGEN_FELIZ = carpetaImgs + "Rutina 2.png"
+IMAGEN_MUY_FELIZ =  carpetaImgs + "Rutina 3.png"
+IMAGEN_TRISTE = carpetaImgs + "Rutina 4.png"
+IMAGEN_CANSADO = carpetaImgs + "Rutina 5.png"
+IMAGEN_ENOJADO = carpetaImgs + "Rutina 6.png"
+IMAGEN_ASOMBRADO = carpetaImgs + "Rutina 7.png"
 
-class Expression(pygame.sprite.Sprite):
-    def __init__(self, data):
-        super().__init__()
-        self.image = pygame.Surface((len(data[0]), len(data)))
-        x = y = 0
-        for row in data:
-            for col in row:
-                if col == "O":
-                    self.image.set_at((x, y), pygame.Color('firebrick3')) #firebrick2 #'dodgerblue'
-                x += 1
-            y += 1
-            x = 0
-        #self.image = pygame.transform.scale(self.image, (TILE_SIZE*len(data[0]), TILE_SIZE*len(data)))
-        self.image = pygame.transform.scale(self.image, (800, 480))
-        self.rect = self.image.get_rect()
+# Lista de rutas de imágenes
+SECUENCIA_IMAGENES = [IMAGEN_SIN_PALABRAS, IMAGEN_ENOJADO, IMAGEN_ASOMBRADO]
 
-REGULAR = Expression([
-"                     ",
-"                     ",
-"    OOOO     OOOO    ",
-"   OOOOOO   OOOOOO   ",
-"   OOOOOO   OOOOOO   ",
-"    OOOO     OOOO    ",
-"                     ",
-"                     ",
-])
+# Posición de inicio de la ventana
+window_position = [0, 0]
 
-QUESTION = Expression([
-"                     ",
-"                     ",
-"    OOOO             ",
-"   OOOOOO    OOOO    ",
-"   OOOOOO   OOOOOO   ",
-"    OOOO     OOOO    ",
-"                     ",
-"                     ",
-])
+# Pasos para movimiento horizontal y vertical
+pasosHorizontal = 5
+pasosVertical = 5
 
-SAD = Expression([
-"                     ",
-"                     ",
-"                     ",
-"                     ",
-"                     ",
-"   OOOOOO   OOOOOO   ",
-"                     ",
-"                     ",
-])
+def moverVentana():
+    keys = pygame.key.get_pressed()
+    
+    if keys[pygame.K_LEFT]:
+        window_position[0] -= pasosHorizontal
+    if keys[pygame.K_RIGHT]:
+        window_position[0] += pasosHorizontal
+    if keys[pygame.K_UP]:
+        window_position[1] -= pasosVertical
+    if keys[pygame.K_DOWN]:
+        window_position[1] += pasosVertical
 
 def main():
+    # Inicializa Pygame
     pygame.init()
-    screen = pygame.display.set_mode(SCREEN_SIZE.size)
+
+    # Dimensiones de la ventana
+    window_width = 800
+    window_height = 480
+
+    # Crea la ventana sin bordes
+    window = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
+
     timer = pygame.time.Clock()
-    expressions = cycle([REGULAR, QUESTION, REGULAR, QUESTION, SAD])
+    expressions = cycle(SECUENCIA_IMAGENES)
     current = next(expressions)
     pygame.time.set_timer(pygame.USEREVENT, 1000)
-
-    while True:
-
+    
+    # Bucle principal
+    running = True
+    while running:
+        
         for e in pygame.event.get():
             if e.type == pygame.QUIT: 
-                return
+                running = False
             if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
-                return
+                running = False
             if e.type == pygame.USEREVENT:
                 current = next(expressions)
+        
+        # Mueve las ventanas por medio de teclas
+        moverVentana()
 
-        screen.fill((30, 30, 30))
-        screen.blit(current.image, current.rect)
-        timer.tick(1)
+        # Mueve la ventana
+        ctypes.windll.user32.MoveWindow(pygame.display.get_wm_info()['window'], window_position[0], window_position[1], window_width, window_height, True)
+
+        imagen = pygame.image.load(current)
+        window.blit(imagen, (0, 0))
+        
+        # Muestra la ventana
+        pygame.display.flip()
+        
+        timer.tick(60)
         pygame.display.update()
+
+    # Finaliza Pygame
+    pygame.quit()
 
 if __name__ == "__main__":
     main()
