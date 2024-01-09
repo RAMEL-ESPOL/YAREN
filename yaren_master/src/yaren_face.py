@@ -3,8 +3,8 @@ import pygame
 from itertools import cycle
 import subprocess
 
-carpetaImgs = "src/YAREN/yaren_master/rostro/" #/home/robots-irda/catkin_ws/src/urdf_tutorial/rostro/Initial.png
-IMAGEN_SIN_PALABRAS = carpetaImgs + "Initial.png"
+carpetaImgs = "/home/ramellaptod/robotis_ws/src/YAREN/yaren_master/rostro/" #/home/robots-irda/catkin_ws/src/urdf_tutorial/rostro/Initial.png
+IMAGEN_SIN_PALABRAS = carpetaImgs + "initial.png"
 IMAGEN_FELIZ = carpetaImgs + "Rutina 2.png"
 IMAGEN_MUY_FELIZ =  carpetaImgs + "Rutina 3.png"
 IMAGEN_TRISTE = carpetaImgs + "Rutina 4.png"
