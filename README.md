@@ -14,6 +14,7 @@ roslaunch yaren_u2d2 yaren_full.launch
 ```
 
 ## Adición de movimientos
+![Imagen de Yaren](https://github.com/RAMEL-ESPOL/YAREN/blob/main/InterfazMovimientos.png)
 ### Primer paso
 Habilitar permisos 
 ```bash
