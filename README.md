@@ -1,5 +1,6 @@
 # Aplicación de inteligencia artificial a un robot humanoide para el tratamiento de estrés
-![hola]("YarenPerfil.png")
+![Imagen de Yaren](https://github.com/RAMEL-ESPOL/YAREN/blob/main/YarenPerfil.png)
+
 ## Ejecución del funcionamiento
 ### Primer paso
 Habilitar permisos 
