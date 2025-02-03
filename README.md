@@ -1,9 +1,9 @@
-# YAREN
+# Aplicación de inteligencia artificial a un robot humanoide para el tratamiento de estrés
 
-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
-
-sudo chmod 666 /dev/ttyUSB0
-
+## Primer paso
+```bash
+    sudo chmod 666 /dev/ttyUSB0
+```
 roslaunch yaren_u2d2 yaren_communication.launch
 
     rosrun yaren_master movement.py
