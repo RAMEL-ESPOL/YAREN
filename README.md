@@ -1,5 +1,5 @@
 # Aplicación de inteligencia artificial a un robot humanoide para el tratamiento de estrés
-![hola]("C:\Users\Elsie\Downloads\YarenPerfil.png")
+![hola]("\Users\Elsie\Downloads\YarenPerfil.png")
 ## Ejecución del funcionamiento
 ### Primer paso
 Habilitar permisos 
