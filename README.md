@@ -1,14 +1,28 @@
 # Aplicación de inteligencia artificial a un robot humanoide para el tratamiento de estrés
-
-## Primer paso
+## Ejecución del funcionamiento
+### Primer paso
+    Habilitar permisos 
 ```bash
     sudo chmod 666 /dev/ttyUSB0
 ```
-roslaunch yaren_u2d2 yaren_communication.launch
+### Segundo paso
+    Lanzamiento completo del sistema
+```bash
+    roslaunch yaren_u2d2 yaren_full.launch
+```
 
-    rosrun yaren_master movement.py
-
-
+## Adición de movimientos
+### Primer paso
+    Habilitar permisos 
+```bash
+    sudo chmod 666 /dev/ttyUSB0
+```
+### Segundo paso
+```bash
+    roslaunch yaren_u2d2 yaren_communication_datos.launch
+```
+    
+### Tercer paso
 
 
 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
