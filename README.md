@@ -24,7 +24,7 @@ sudo chmod 666 /dev/ttyUSB0
 ```bash
 roslaunch yaren_u2d2 yaren_communication_datos.launch
 ```
-Llevar las articulaciones a una posición deseada. Luego imprimir dichas posiciones, para llevarlas a un txt. Guardar dicho txt y asociarlo en el config.   
+Activar torque de los motores (Véase la imagen- sección 1). Llevar las articulaciones, manualmente, a una posición deseada. Luego imprimir dichas posiciones (sección 3), para llevarlas a un txt. Guardar dicho txt y asociarlo en el config.   
 
 
 
