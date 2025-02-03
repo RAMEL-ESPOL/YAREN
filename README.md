@@ -3,7 +3,7 @@
 ### Primer paso
 Habilitar permisos 
 ```bash
-    sudo chmod 666 /dev/ttyUSB0
+sudo chmod 666 /dev/ttyUSB0
 ```
 ### Segundo paso
 Lanzamiento completo del sistema
