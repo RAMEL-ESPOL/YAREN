@@ -1,0 +1,12 @@
+gTTS
+moviepy
+pydub
+numpy
+librosa
+numpy
+matplotlib
+scipy
+joblib
+pillow
+opencv-python
+phonemizer

@@ -1,0 +1,6 @@
+[submodule "yaren_sdk/DynamixelSDK"]
+	path = yaren_sdk/DynamixelSDK
+	url = https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+[submodule "yaren_submodules/DynamixelSDK"]
+	path = yaren_submodules/DynamixelSDK
+	url = https://github.com/ROBOTIS-GIT/DynamixelSDK.git

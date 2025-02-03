@@ -1,0 +1,55 @@
+import cv2
+import numpy as np
+import tensorflow as tf
+
+# Cargar el video
+video_path = '/home/quadruped/Documents/own_mouthmovement/output_video.mp4'
+cap = cv2.VideoCapture(video_path)
+
+# Obtener información del video
+fps = cap.get(cv2.CAP_PROP_FPS)
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+# Crear un objeto para guardar el video resultante
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # O puedes usar 'XVID' o 'MJPG'
+output_video = cv2.VideoWriter('video_output.mp4', fourcc, fps, (frame_width, frame_height))
+
+# Cargar un modelo de IA preentrenado para mejorar los cuadros (por ejemplo, un modelo de superresolución)
+model = tf.keras.applications.MobileNetV2(weights='imagenet')
+
+def enhance_frame(frame):
+    # Convertir la imagen de BGR a RGB
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    # Redimensionar la imagen para pasarla al modelo (normalización y formato)
+    img_resized = cv2.resize(frame_rgb, (224, 224))
+    img_array = tf.keras.preprocessing.image.img_to_array(img_resized)
+    img_array = tf.expand_dims(img_array, axis=0)
+    img_array = tf.keras.applications.mobilenet_v2.preprocess_input(img_array)
+
+    # Hacer predicción (en este caso, usamos el modelo solo como ejemplo, no es ideal para mejora de video)
+    enhanced_img = model.predict(img_array)
+    enhanced_img = tf.squeeze(enhanced_img)
+
+    # Convertir la imagen de vuelta a BGR
+    enhanced_img = cv2.cvtColor(enhanced_img.numpy().astype(np.uint8), cv2.COLOR_RGB2BGR)
+    
+    return enhanced_img
+
+# Procesar el video cuadro por cuadro
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    # Limpiar y mejorar el cuadro de la boca (aquí puedes agregar técnicas más específicas de suavizado)
+    enhanced_frame = enhance_frame(frame)
+
+    # Escribir el cuadro mejorado al video de salida
+    output_video.write(enhanced_frame)
+
+# Liberar recursos
+cap.release()
+output_video.release()
+cv2.destroyAllWindows()

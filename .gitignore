@@ -1,0 +1,19 @@
+# Ignorar todos los archivos MP3
+*.mp3
+
+# Excepción para "Te quiero - Barney Latinoamérica.mp3"
+!Te quiero - Barney Latinoamérica.mp3
+
+# Otros patrones existentes
+Docs
+__pycache__
+transcript.txt
+devel
+build
+*.wav
+
+#hospital
+deps
+downloads
+fuel_models
+.DS_Store

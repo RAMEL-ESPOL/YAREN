@@ -1,0 +1,10 @@
+<launch>
+    <!-- Nodo de comunicación -->
+    <include file="$(find yaren_u2d2)/launch/yaren_communication.launch" />
+
+    <!-- Nodo de movimientos -->
+    <node pkg="yaren_master" type="voz_movement.py" name="voz_motion_control" output="screen"/>
+
+    <!-- Nodo de caras -->
+    <node pkg="yaren_master" type="voz_yaren_face.py" name="voz_yaren_face" output="screen"/>
+</launch>
