@@ -1,12 +1,12 @@
 sounddevice
 pyaudio
+portaudio19-dev
 dynamixel_sdk
-gTTS
+TTS
 ffmpeg
 pydub
 numpy == 1.24.4
 librosa
-numpy
 moviepy == 1.0.3
 matplotlib
 scipy

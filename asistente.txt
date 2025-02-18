@@ -1,0 +1,241 @@
+import io
+import os
+import json
+import speech_recognition as sr
+import whisper
+import time
+from datetime import datetime, timedelta
+from queue import Queue
+from tempfile import NamedTemporaryFile
+import openai
+import gtts
+import pygame
+import warnings
+
+# Ignorar advertencias
+warnings.filterwarnings("ignore")
+
+# Clave de OpenAI
+#openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = "sk-Dn6iENzR1uW95JT4AFzuhN7GrtB_duDX9K4iubzBS8T3BlbkFJkVha-GIuv4FiF6TaUdKbbxwaQ3NqucC7dpIH0uoMIA"  # Coloca tu clave de OpenAI aquí
+print(openai.api_key )
+
+class Asistente:
+    def __init__(self, model, record_timeout, phrase_timeout, energy_threshold, wake_word, comandos, prompt,respuestas_basicas):
+        self.temp_file = NamedTemporaryFile(delete=False).name
+        self.transcription = ['']
+        self.audio_model = whisper.load_model(model)
+        self.phrase_time = None
+        self.last_sample = bytes()
+        self.data_queue = Queue()
+        self.recorder = sr.Recognizer()
+        self.recorder.energy_threshold = energy_threshold
+        self.recorder.dynamic_energy_threshold = False
+        self.record_timeout = record_timeout
+        self.phrase_timeout = phrase_timeout
+        self.wake_word = wake_word.lower()
+        self.comandos = comandos
+        self.prompt = prompt
+        self.respuestas_basicas = respuestas_basicas
+
+    def listen(self):
+        self.source = sr.Microphone(sample_rate=16000)
+        with self.source:
+            self.recorder.adjust_for_ambient_noise(self.source)
+
+        def record_callback(_, audio: sr.AudioData) -> None:
+            data = audio.get_raw_data()
+            self.data_queue.put(data)
+
+        self.recorder.listen_in_background(self.source, record_callback, phrase_time_limit=self.record_timeout)
+        while True:
+            try:
+                if not self.data_queue.empty():
+                    now = datetime.utcnow()
+                    phrase_complete = False
+                    if self.phrase_time and now - self.phrase_time > timedelta(seconds=self.phrase_timeout):
+                        self.last_sample = bytes()
+                        phrase_complete = True
+                    self.phrase_time = now
+
+                    while not self.data_queue.empty():
+                        data = self.data_queue.get()
+                        self.last_sample += data
+
+                    audio_data = sr.AudioData(self.last_sample, self.source.SAMPLE_RATE, self.source.SAMPLE_WIDTH)
+                    wav_data = io.BytesIO(audio_data.get_wav_data())
+
+                    with open(self.temp_file, 'wb') as f:
+                        f.write(wav_data.read())
+
+                    if os.path.exists(self.temp_file):
+                        # Transcribe the audio
+                        result = self.audio_model.transcribe(self.temp_file, language='es')
+                        text = result['text'].strip()
+
+                        # Comprobar si "JULIO" fue mencionado
+                        if "julio" in text.lower():
+                            # Solo procesar la transcripción si JULIO fue mencionado
+                            self.transcription.append(text)
+                            print(text)  # Imprime la transcripción en tiempo real
+
+                            # Guardar en el archivo inmediatamente
+                            with open("transcript.txt", "a") as f:
+                                f.write(text + "\n")
+
+                            # Procesar si el wake_word está en el texto
+                            if self.wake_word in text.lower():
+                                mensaje = text.lower().replace(self.wake_word, "").strip()  # Elimina el wake word
+                                if mensaje:  # Asegúrate de que hay un mensaje después del wake word
+                                    mensaje = "Humano: " + mensaje
+                                    respuesta = self.call_gpt(mensaje)
+                                    print(respuesta)
+                                    self.tts(respuesta)
+                                    self.play_audio_pygame("audio.mp3")
+                        # Si "JULIO" no se mencionó, no se procesa nada
+                        self.last_sample = bytes()  # Reiniciar last_sample para la próxima entrada
+
+            except KeyboardInterrupt:
+                break
+
+    def call_gpt(self, texto):
+        print("Comunicando con OpenAI:", texto)
+        try:
+            respuesta = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",  # Usa el modelo más reciente disponible
+                messages=[{
+                            "role": "system",
+                            "content": [
+                                            {
+                                                "type": "text",
+                                                "text": self.prompt
+                                            },{
+                                                "type": "text",
+                                                "text": json.dumps(self.respuestas_basicas, ensure_ascii=False, indent=4)
+
+                                            },
+                                        ],
+                            },{"role": "user", "content": texto}],
+                temperature=0.5,
+                max_tokens=150,
+                top_p=1,
+                frequency_penalty=0,
+                presence_penalty=0.6
+            )
+            return respuesta["choices"][0]["message"]["content"]
+        except Exception as e:
+            print(f"Error en la llamada a OpenAI: {e}")
+            return "Lo siento, no puedo procesar tu solicitud en este momento."
+
+    def tts(self, texto):
+        tts = gtts.gTTS(texto, lang='es')
+        audio_path = os.path.join(os.getcwd(), 'audio.mp3')
+        tts.save(audio_path)
+
+    def play_audio_pygame(self, filename):
+        try:
+            pygame.mixer.init()
+            pygame.mixer.music.load(filename)
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                pygame.time.Clock().tick(10)
+        except Exception as e:
+            print(f"Error al reproducir el audio: {e}")
+
+    def listen_movement_comand(self):
+        self.source = sr.Microphone(sample_rate=16000)
+        with self.source:
+            self.recorder.adjust_for_ambient_noise(self.source)
+
+        def record_callback(_, audio: sr.AudioData) -> None:
+            data = audio.get_raw_data()
+            self.data_queue.put(data)
+
+        self.recorder.listen_in_background(self.source, record_callback, phrase_time_limit=self.record_timeout)
+        while True:
+            try:
+                if not self.data_queue.empty():
+                    now = datetime.utcnow()
+                    phrase_complete = False
+                    if self.phrase_time and now - self.phrase_time > timedelta(seconds=self.phrase_timeout):
+                        self.last_sample = bytes()
+                        phrase_complete = True
+                    self.phrase_time = now
+
+                    while not self.data_queue.empty():
+                        data = self.data_queue.get()
+                        self.last_sample += data
+
+                    audio_data = sr.AudioData(self.last_sample, self.source.SAMPLE_RATE, self.source.SAMPLE_WIDTH)
+                    wav_data = io.BytesIO(audio_data.get_wav_data())
+
+                    with open(self.temp_file, 'wb') as f:
+                        f.write(wav_data.read())
+
+                    if os.path.exists(self.temp_file):
+                        # Transcribe the audio
+                        result = self.audio_model.transcribe(self.temp_file, language='es')
+                        text = result['text'].strip()
+
+                        # Extraer las claves del JSON
+                        keys = list(self.respuestas_basicas.keys())
+
+                        # Comprobar si "JULIO" fue mencionado
+                        if "julio" in text.lower():
+                            # Solo procesar la transcripción si JULIO fue mencionado
+                            self.transcription.append(text)
+                            print(text)  # Imprime la transcripción en tiempo real
+
+                            # Guardar en el archivo inmediatamente
+                            with open("transcript.txt", "a") as f:
+                                f.write(text + "\n")
+
+                            # Procesar si el wake_word está en el texto
+                            if self.wake_word in text.lower():
+                                mensaje = text.lower().replace(self.wake_word, "").strip()  # Elimina el wake word
+                                #mensaje = "saluda"
+                                # Verificar si el mensaje está en la lista de comandos
+                                if mensaje in self.comandos:
+                                    # Obtener e imprimir la posición del mensaje en la lista
+                                    indice = self.comandos.index(mensaje)
+                                    print(f"El comando '{mensaje}' está en la lista de comandos en la posición {indice}.")
+                                    return indice
+                                elif mensaje:  # Asegúrate de que hay un mensaje después del wake word
+                                    mensaje = "Humano: " + mensaje
+                                    respuesta = self.call_gpt(mensaje)
+                                    print(respuesta)
+                                    self.tts(respuesta)
+                                    self.play_audio_pygame("audio.mp3")
+                        elif any(key.lower() in text.lower() for key in keys):
+                            # Si alguna clave del JSON está en el texto, extraer el mensaje relacionado con la clave
+                            matching_key = next(key for key in keys if key.lower() in text.lower())
+                            mensaje = matching_key  # El mensaje será la clave en este caso
+                            mensaje = "Humano: " + mensaje
+                            respuesta = self.call_gpt(mensaje)
+                            print(respuesta)
+                            self.tts(respuesta)
+                            self.play_audio_pygame("audio.mp3")   
+
+                        # Si "JULIO" no se mencionó, no se procesa nada
+                        self.last_sample = bytes()  # Reiniciar last_sample para la próxima entrada
+
+            except KeyboardInterrupt:
+                break
+
+
+# Aquí puedes incluir tu lógica para ejecutar el asistente
+if __name__ == "__main__":
+    # Instanciar el asistente con todos los parámetros necesarios
+    asistente = Asistente(
+        model='small',                # Modelo Whisper
+        record_timeout=5,             # Tiempo máximo de grabación por frase
+        phrase_timeout=2,             # Tiempo de espera para considerar una frase como finalizada
+        energy_threshold=300,         # Umbral de energía para detección de sonido
+        wake_word='julio',            # Palabra de activación
+        comandos= [] ,  # Comandos
+        prompt= """Eres un asistente amigable diseñado para ayudar con tareas relacionadas con el robot YAREN.
+        Responde de forma clara y útil a las solicitudes, y proporciona ayuda técnica cuando sea necesario.
+        Responde en maximo 50 palabras""",          # Descripción del asistente (prompt)
+        respuestas_basicas = {}
+    )
+    asistente.listen()

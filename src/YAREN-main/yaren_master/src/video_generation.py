@@ -1,4 +1,4 @@
-from gtts import gTTS
+# from gtts import gTTS
 from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip, CompositeVideoClip
 import os
 from pydub import AudioSegment, silence
@@ -9,7 +9,6 @@ import os
 from TTS.api import TTS
 from concurrent.futures import ThreadPoolExecutor
 from pydub import AudioSegment
-from gtts import gTTS
 
 # Añade el directorio src a sys.path
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
@@ -64,7 +63,7 @@ def mapear_texto_a_imagenes(total_duration, respuesta, image_folder, points_fold
 
     for char in respuesta:
         duration_per_vocal += unit_duration
-        if char in phoneme_to_image or char in [" ", ".", "!", "?", "(", ")", ","]:
+        if char in phoneme_to_image or char in [" ", ".", "!", "?", "(", ")", ",", "¿", "¡"]:
             image_file = os.path.join(image_folder, phoneme_to_image.get(char, shut_mouth[mouth_emotion]))
             points_file = os.path.join(points_folder, phoneme_to_points.get(char, shut_mouth_points[mouth_emotion]))
 
