@@ -67,6 +67,56 @@ def mostrarIntro():
 # arriba y abajo con las teclas o, p, q y a.
 
 
+def seleccionar_pantalla():
+    pygame.init()
+    pantallas = pygame.display.get_desktop_sizes()
+    print("Detectando pantallas disponibles:")
+    for i, res in enumerate(pantallas):
+        print(f"Pantalla {i+1}: {res[0]}x{res[1]}")
+
+    seleccionada = 0
+    seleccion_hecha = False
+    fuente = pygame.font.SysFont("Arial", 30)
+    window_temp = pygame.display.set_mode((500, 300))
+    pygame.display.set_caption("Seleccionar Pantalla")
+
+    while not seleccion_hecha:
+        window_temp.fill((0, 0, 0))
+        texto = fuente.render(f"Seleccione la pantalla (1-{len(pantallas)}): {seleccionada+1}", True, (255, 255, 255))
+        window_temp.blit(texto, (50, 100))
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    seleccionada = (seleccionada + 1) % len(pantallas)
+                elif event.key == pygame.K_LEFT:
+                    seleccionada = (seleccionada - 1) % len(pantallas)
+                elif event.key == pygame.K_RETURN:
+                    seleccion_hecha = True
+
+    # Calcular la posición global de la pantalla seleccionada
+    x_global = sum(pantallas[i][0] for i in range(seleccionada))
+    y_global = 0  # Asumiendo que las pantallas están alineadas horizontalmente
+
+    pygame.display.quit()
+    return seleccionada, pantallas[seleccionada], (x_global, y_global)
+
+def centrar_ventana(pantalla_res, position):
+    global window_position
+    x_global, y_global = position
+    window_width, window_height = 800, 480  # Dimensiones de la ventana
+    screen_width, screen_height = pantalla_res
+    window_position = [
+        (screen_width - window_width) // 2 + x_global,
+        (screen_height - window_height) // 2 + y_global
+    ]
+
+
+
 class imagenRatonContento_class( pygame.sprite.Sprite ):
 
     def __init__( self, posX, posY ):
@@ -151,6 +201,8 @@ class juego:
         self.position_horizontal_Tom=0
         
         self.sub_commands = rospy.Subscriber('/joint_information', JointState, self.callback_commands)
+        self.window_width, self.window_height = 800, 480
+        
     
             
     def callback_commands(self,msg):
@@ -175,14 +227,32 @@ class juego:
 
     def main(self):
         while not rospy.is_shutdown():
-            print(self.position_vertical_Jerry)
+            
+            # Configuración de la ventana
+            #pygame.init()
+
+            
+
+            
+            
+
+
+            #print(self.position_vertical_Jerry)
             pygame.mouse.set_visible(False)
             mostrarIntro()
             time.sleep(0.75)
             os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"
             os.environ['SDL_VIDEO_CENTERED'] = "0"  # Asegura que no intente centrarla automáticamente
-            visor = pygame.display.set_mode((800, 480), pygame.NOFRAME | pygame.FULLSCREEN)
-            pygame.display.set_caption('Ejemplo de Mapa')
+
+            # Selección de pantalla
+            seleccionada, res_pantalla,position = seleccionar_pantalla()
+            centrar_ventana(res_pantalla,position)
+            # Configurar ventana en la posición seleccionada
+            os.environ['SDL_VIDEO_WINDOW_POS'] = f"{window_position[0]},{window_position[1]}"
+            visor = pygame.display.set_mode((self.window_width, self.window_height), pygame.NOFRAME)
+            pygame.display.set_caption("Ejemplo de Mapa")
+            #visor = pygame.display.set_mode((800, 480), pygame.NOFRAME | pygame.FULLSCREEN)
+            #pygame.display.set_caption('Ejemplo de Mapa')
 
             # Ahora creamos el sprite del jugador en la posición (50,200)...
 
