@@ -6,5 +6,9 @@
     <node pkg="yaren_master" type="voz_movement.py" name="voz_motion_control" output="screen"/>
 
     <!-- Nodo de caras -->
-    <node pkg="yaren_master" type="voz_yaren_face.py" name="voz_yaren_face" output="screen"/>
+    <!-- <node pkg="yaren_master" type="voz_yaren_face.py" name="voz_yaren_face" output="screen"/> -->
+
+    <!-- Nodo de caras -->
+    <include file="$(find software_interactive)/launch/multiplatform.launch" />
+
 </launch>
