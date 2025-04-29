@@ -12,6 +12,9 @@ import os
 import json
 import ast
 
+#CARPETA DE MOVIMIENTOS TXT
+movements_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'movements'))
+
 
 #number='0'
 
@@ -113,7 +116,7 @@ class movement:
 
             elif (self.number=='2'):
             
-                file_path = os.path.dirname(os.path.abspath(__file__)) + "/abrazo.txt"
+                file_path = movements_folder + "/abrazo.txt"
                 self.process_file(file_path)
 
             elif (self.number=='3'):
@@ -135,7 +138,7 @@ class movement:
             elif (self.number=='5'):
             
                 while not rospy.is_shutdown():
-                    file_path = os.path.dirname(os.path.abspath(__file__)) + "/luchaLlamado.txt"
+                    file_path = movements_folder + "/luchaLlamado.txt"
                     self.process_file(file_path)
             
             elif (self.number=='6'):
@@ -197,7 +200,7 @@ class movement:
             
             elif (self.number=='7'):
                 while not rospy.is_shutdown():
-                    file_path = os.path.dirname(os.path.abspath(__file__)) + "/baile_de_barney.txt"
+                    file_path = movements_folder + "/baile_de_barney.txt"
                     self.process_file(file_path)
 
             time=1
