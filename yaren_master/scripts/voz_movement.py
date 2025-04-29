@@ -51,16 +51,16 @@ class movement:
 
             for i, line in enumerate(lines):
                 try:
-                    # Separar la posición del tiempo
+                    # Separate position of time
                     parts = line.strip().split(";")
                     positions = ast.literal_eval(parts[0].strip())
                     time = float(parts[1].strip()) if len(parts) > 1 else 1.0
 
-                    # Validar formato
+                    # Separate position of time
                     if not isinstance(positions, list) or not all(isinstance(x, (int, float)) for x in positions):
                         raise ValueError("Formato inválido de posiciones")
 
-                    # Crear mensaje y publicar
+                    # Create message and publish
                     #self.joint_position_state=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
                     #self.joints_states.position = self.joint_position_state
                     ##self.pub_joint_states.publish(self.joints_states)
