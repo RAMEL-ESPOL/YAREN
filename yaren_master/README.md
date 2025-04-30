@@ -1,27 +1,31 @@
-### Descripción del paquete
+### Package Description
 
-Este paquete contiene los archivos necesarios para la puesta en escena del robot, abarcando tanto el control de sus movimientos como la visualización de su rostro.
+This package contains the necessary files for staging the robot, covering both the control of its movements and the visualization of its face.
 
-### Estructura del paquete
+### Package Structure
 
 ```
+- launch/
+  └── gazebo_simulation.launch
 - movements/
 - rostro/
 - scripts/
   ├── movement.py
   ├── voz_movement.py
+  ├── yaren_communication.py
   └── yaren_face.py
 ```
 
-### Descripción de los archivos
+### File Descriptions
 
-- **`movement.py`**: Script que permite controlar las posiciones del robot mediante comandos por consola.
-- **`voz_movement.py`**: Script que permite ejecutar movimientos del robot a través de comandos de voz. Para su funcionamiento, es necesario utilizar el paquete [AI-FaceSoftware](https://github.com/RAMEL-ESPOL/AI-FaceSoftware.git). Algunos de los movimientos utilizados en este script se leen desde archivos `.txt` ubicados en la carpeta `movements/`, los cuales han sido generados previamente mediante la interfaz de creación de movimientos.
-- **`yaren_face.py`**: Script que reproduce en bucle una secuencia de imágenes que representan el rostro del robot. Las imágenes utilizadas se encuentran en la carpeta `rostro/`.
+- **`movement.py`**: Script that allows control of the robot's positions through console commands.  
+- **`voz_movement.py`**: Script that enables the execution of robot movements via voice commands. To operate correctly, it requires the [AI-FaceSoftware](https://github.com/RAMEL-ESPOL/AI-FaceSoftware.git) package. Some of the movements used in this script are read from `.txt` files located in the `movements/` folder, which have been previously generated using the movement creation interface.
+- **`yaren_communication.py`**: Script used in **`gazebo_simulation.launch`**.
+- **`yaren_face.py`**: Script that continuously loops a sequence of images representing the robot’s face. The images used are located in the `rostro/` folder.
 
-### Cómo agregar nuevos movimientos usando archivos `.txt` generados
+### How to Add New Movements Using Generated `.txt` Files
 
-Para agregar nuevos movimientos al archivo `voz_movement.py`, dirígete a la sección final del script, donde se definen los movimientos por número de comando. Puedes seguir el siguiente formato utilizando una estructura `elif`:
+To add new movements to the `voz_movement.py` file, go to the end section of the script, where the movements are defined by command number. You can follow the structure below using an `elif` block:
 
 ```python
 elif self.number == '7':
@@ -30,7 +34,7 @@ elif self.number == '7':
         self.process_file(file_path)
 ```
 
-Cada `self.number` representa un identificador de comando asociado a un movimiento específico. Para agregar uno nuevo, simplemente continúa con la numeración y especifica el nombre del archivo `.txt` correspondiente:
+Each `self.number` represents a command identifier associated with a specific movement. To add a new one, simply continue the numbering and specify the corresponding `.txt` file name:
 
 ```python
 elif self.number == '8':
@@ -39,4 +43,5 @@ elif self.number == '8':
         self.process_file(file_path)
 ```
 
-Asegúrate de que el archivo `.txt` se encuentre en la carpeta `movements/` y haya sido creado con la interfaz de movimientos.
+Ensure that the `.txt` file is located in the `movements/` folder and has been created using the movement interface.
+
