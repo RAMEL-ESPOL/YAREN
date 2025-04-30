@@ -1,21 +1,21 @@
-### Descripción del paquete
+### Package Description
 
-Este paquete contiene los archivos necesarios para la comunicación y control de los motores del robot, así como para la reproducción del rostro animado mediante video. Se integran funciones de movimiento y visualización utilizando otros paquetes de soporte, como **AI-FaceSoftware**.
+This package contains the necessary files for communication and control of the robot's motors, as well as for displaying the animated face through video playback. It integrates movement and visualization functions using other support packages, such as **AI-FaceSoftware**.
 
-### Archivos de lanzamiento disponibles
+### Available Launch Files
 
-Este paquete incluye dos archivos `launch` principales:
+This package includes two main `launch` files:
 
 - **`yaren_full.launch`**:  
-  Ejecuta la puesta en marcha completa del sistema.  
-  - Inicia la comunicación con los motores mediante `yaren_communication.launch`.  
-  - Envía los comandos de movimiento al robot.  
-  - Reproduce el video del rostro del robot, conectándose al paquete [AI-FaceSoftware](https://github.com/RAMEL-ESPOL/AI-FaceSoftware.git). (primero descargar el paquete)
+  Executes the full startup of the system.  
+  - Starts communication with the motors using `yaren_communication.launch`.  
+  - Sends movement commands to the robot.  
+  - Plays the video of the robot's face by connecting to the [AI-FaceSoftware](https://github.com/RAMEL-ESPOL/AI-FaceSoftware.git) package. (Download the package first)
 
 - **`yaren_communication_datos.launch`**:  
-  Lanza una interfaz que permite editar manualmente las posiciones de los motores.
+  Launches an interface that allows manual editing of motor positions.
 
-### Estructura del paquete
+### Package Structure
 
 ```
 - launch/
@@ -27,7 +27,7 @@ Este paquete incluye dos archivos `launch` principales:
   └── w_datos.py
 ```
 
-### Descripción de los scripts
+### Script Descriptions
 
-- **`u2d2_communication.py`**: Maneja la comunicación con los actuadores del robot a través del adaptador U2D2.
-- **`w_datos.py`**: Script asociado a la interfaz gráfica para la edición de posiciones motoras lanzada por `yaren_communication_datos.launch`.
+- **`u2d2_communication.py`**: Manages communication with the robot’s actuators through the U2D2 adapter.  
+- **`w_datos.py`**: Script associated with the graphical interface for editing motor positions, launched by `yaren_communication_datos.launch`.
