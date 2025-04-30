@@ -1,35 +1,35 @@
-# Aplicación de inteligencia artificial a un robot humanoide para el tratamiento de estrés
-![Imagen de Yaren](https://github.com/RAMEL-ESPOL/YAREN/blob/main/YarenPerfil.png)
+# Application of Artificial Intelligence to a Humanoid Robot for Stress Treatment  
+![Image of Yaren](https://github.com/RAMEL-ESPOL/YAREN/blob/main/YarenPerfil.png)
 
-## Ejecución del funcionamiento
-### Primer paso
-Habilitar permisos 
+## System Execution
+### Step 1  
+Enable permissions  
 ```bash
 sudo chmod 666 /dev/ttyUSB0
 ```
-### Segundo paso
-Lanzamiento completo del sistema
+
+### Step 2  
+Launch the full system  
 ```bash
 roslaunch yaren_u2d2 yaren_full.launch
 ```
 
-## Adición de movimientos
-![Imagen de Yaren](https://github.com/RAMEL-ESPOL/YAREN/blob/main/InterfazMovimientos.png)
-### Primer paso
-Habilitar permisos 
+## Adding Movements  
+![Image of Yaren](https://github.com/RAMEL-ESPOL/YAREN/blob/main/InterfazMovimientos.png)
+
+### Step 1  
+Enable permissions  
 ```bash
 sudo chmod 666 /dev/ttyUSB0
 ```
-### Segundo paso
+
+### Step 2  
 ```bash
 roslaunch yaren_u2d2 yaren_communication_datos.launch
 ```
-Activar torque de los motores (Véase la imagen- sección 1).
-Llevar las articulaciones, manualmente, a una posición deseada. 
-Luego imprimir dichas posiciones (sección 2), para llevarlas a un txt. 
-Guardar dicho txt y asociarlo en el config. 
-La sección 3 es para escribir manualmente un arreglo de posiciones, y la sección 4 es para poner rutinas, es decir múltiples posiciones.
 
-
-
-
+Activate motor torque (see the image — section 1).  
+Manually move the joints to a desired position.  
+Then, print those positions (section 2) to save them into a `.txt` file.  
+Save the `.txt` file and associate it in the config.  
+Section 3 allows you to manually enter an array of positions, and section 4 is for defining routines (i.e., multiple positions).
