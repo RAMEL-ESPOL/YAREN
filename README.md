@@ -14,8 +14,6 @@ Launch the full system
 roslaunch yaren_u2d2 yaren_full.launch
 ```
 
-## Adding Movements  
-![Image of Yaren](https://github.com/RAMEL-ESPOL/YAREN/blob/main/InterfazMovimientos.png)
 
 ### Step 1  
 Enable permissions  
@@ -27,6 +25,9 @@ sudo chmod 666 /dev/ttyUSB0
 ```bash
 roslaunch yaren_u2d2 yaren_communication_datos.launch
 ```
+
+## Adding Movements  
+![Image of Yaren](https://github.com/RAMEL-ESPOL/YAREN/blob/main/InterfazMovimientos.png)
 
 Activate motor torque (see the image — section 1).  
 Manually move the joints to a desired position.  
