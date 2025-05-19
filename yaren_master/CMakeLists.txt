@@ -160,12 +160,12 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  src/transformation.py
-  src/transition.py
-  src/voz_movement.py
-  src/voz_yaren_face.py
-  src/video_generation.py
-  src/united_morph_transition.py
+  ##src/transformation.py
+  ##src/transition.py
+  ##src/voz_movement.py
+  ##src/voz_yaren_face.py
+  ##src/video_generation.py
+  ##src/united_morph_transition.py
   
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
